@@ -6,10 +6,12 @@
     <title>Create</title>
   </head>
   <body>
+    {% extends 'base.html' %} {% block content %}
     <h2>Create form</h2>
-    <form method="post">
+    <form method="post" class="form-control">
       {% csrf_token %} {{ form.as_p}}
       <button type="submit">Create Dish</button>
     </form>
+    {% endblock %}
   </body>
 </html>
