@@ -1,6 +1,7 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse, Http404
 from .models import Dish
+from .forms import DishForm
 
 # Create your views here.
 
@@ -12,7 +13,6 @@ def index(request):
 
 def detail(request, id):
     try:
-
         dish = Dish.objects.get(id=id)
 
         dish_data = {
@@ -23,6 +23,21 @@ def detail(request, id):
             "category": {"id": dish.category.id, "name": dish.category.name},
         }
     except Dish.DoesNotExist:
-        return HttpResponse("This dish does not exist!")
+        raise Http404("This dish does not exist!")
 
     return render(request, "detail.html", {"dish": dish_data})
+
+
+def edit_dish(request, id):
+    dish = get_object_or_404(Dish, id=id)
+
+    if request.method == "POST":
+        form = DishForm(request.POST, instance=dish)
+        if form.is_valid():
+            form.save()
+            return redirect("detail", id=dish.id)
+
+    else:
+        form = DishForm(instance=dish)
+
+    return render(request, "edit.html", {"form": form})

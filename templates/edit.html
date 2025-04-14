@@ -3,14 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Restaurant</title>
+    <title>Edit</title>
   </head>
   <body>
-    <ul>
-      {% for dish in dishes %}
-      <li>{{dish.name }} ${{dish.price}} {{dish.category.name}}</li>
-
-      {% endfor %}
-    </ul>
+    <h2>Update dish</h2>
+    <form method="post">
+      {% csrf_token %} {{ form.as_p}}
+      <button type="submit">Save changes</button>
+    </form>
   </body>
 </html>
