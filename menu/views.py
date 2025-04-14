@@ -41,3 +41,24 @@ def edit_dish(request, id):
         form = DishForm(instance=dish)
 
     return render(request, "edit.html", {"form": form})
+
+
+def create_dish(request):
+
+    if request.method == "POST":
+        form = DishForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("index")
+
+    else:
+        form = DishForm()
+
+    return render(request, "create.html", {"form": form})
+
+
+def delete_dish(request, id):
+
+    dish = get_object_or_404(Dish, id=id)
+    dish.delete()
+    return redirect("index")

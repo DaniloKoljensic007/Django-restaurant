@@ -9,7 +9,7 @@
     <ul>
       {% for dish in dishes %}
       <li>{{dish.name }} ${{dish.price}} {{dish.category.name}}</li>
-
+      <a href="{% url 'delete' dish.id %}">Delete</a>
       {% endfor %}
     </ul>
   </body>
