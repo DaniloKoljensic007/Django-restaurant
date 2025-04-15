@@ -49,9 +49,14 @@
           </ul>
         </div>
       </div>
-      <div class="d-flex mx-3">
+      <div class="d-flex mx-3 px-4">
+        {% if user.is_authenticated %}
+        <span>Hello, {{user.username}}</span>
+        <a class="nav-link" href="">Log Out</a>
+        {% else %}
         <a class="nav-link mx-2" href="#">Login</a>
-        <a class="nav-link" href="#">Signup</a>
+        <a class="nav-link" href="{% url 'signup' %}">Signup</a>
+        {% endif %}
       </div>
     </nav>
 
