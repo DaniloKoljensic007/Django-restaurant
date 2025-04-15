@@ -6,8 +6,16 @@
     <title>Dish Detail</title>
   </head>
   <body>
-    <h1>{{dish.name}} ${{dish.price}}</h1>
-    <p>{{dish.description}}</p>
-    <p>{{dish.category.name}}</p>
+    {% extends 'base.html'%} {% block content %}
+    <div class="row m-3">
+      <div class="card" style="width: 18rem">
+        <div class="card-body">
+          <h5 class="card-title">{{dish.name}} ${{dish.price}}</h5>
+          <p class="card-text">{{dish.description}}</p>
+          <p class="card-text">{{dish.is_available}}</p>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
   </body>
 </html>

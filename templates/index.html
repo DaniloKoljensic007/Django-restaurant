@@ -16,8 +16,12 @@
           <h5 class="card-title">{{dish.name}}</h5>
           <p class="card-text">{{dish.decription}}</p>
           <p class="card-text">${{dish.price}}</p>
+          <p class="card-text">{{dish.is_available}}</p>
           <a href="{% url 'delete' dish.id %}" class="btn btn-primary"
             >Delete</a
+          >
+          <a href="{% url 'edit' dish.id %}" class="btn btn-primary m-2"
+            >Edit</a
           >
         </div>
       </div>

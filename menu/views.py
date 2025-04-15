@@ -21,6 +21,7 @@ def detail(request, id):
             "description": dish.description,
             "price": dish.price,
             "category": {"id": dish.category.id, "name": dish.category.name},
+            "is_available": dish.is_available,
         }
     except Dish.DoesNotExist:
         raise Http404("This dish does not exist!")

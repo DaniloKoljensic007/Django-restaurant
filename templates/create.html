@@ -7,10 +7,10 @@
   </head>
   <body>
     {% extends 'base.html' %} {% block content %}
-    <h2>Create form</h2>
-    <form method="post" class="form-control">
+    <h2 class="m-3">Create dish</h2>
+    <form method="post" class="m-3">
       {% csrf_token %} {{ form.as_p}}
-      <button type="submit">Create Dish</button>
+      <button type="submit" class="btn btn-primary">Create Dish</button>
     </form>
     {% endblock %}
   </body>
