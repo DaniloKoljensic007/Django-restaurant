@@ -7,25 +7,27 @@
   </head>
   <body>
     {% extends 'base.html' %} {% block content %}
-    <div class="row m-3">
-      {% for dish in dishes %}
-      <div class="card h-100 m-2" style="width: 18rem">
-        {% load static %}
-        <img src="{% static 'dish1.jpg' %}" class="card-img-top" alt="..." />
-        <div class="card-body">
-          <h5 class="card-title">{{dish.name}}</h5>
-          <p class="card-text">{{dish.decription}}</p>
-          <p class="card-text">${{dish.price}}</p>
-          <p class="card-text">{{dish.is_available}}</p>
-          <a href="{% url 'delete' dish.id %}" class="btn btn-primary"
-            >Delete</a
-          >
-          <a href="{% url 'edit' dish.id %}" class="btn btn-primary m-2"
-            >Edit</a
-          >
-        </div>
+
+    <div class="row m-2">
+      <div
+        class="col-md-3 col-lg-2 bg-dark text-white d-flex flex-column vh-100 p-3"
+      >
+        <h4 class="mb-4">Filter by categories</h4>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2">
+            <a href="#" class="nav-link text-white">Meat</a>
+          </li>
+          <li class="nav-item mb-2">
+            <a href="#" class="nav-link text-white">Vegan</a>
+          </li>
+          <li class="nav-item mb-2">
+            <a href="#" class="nav-link text-white">Vegeterian</a>
+          </li>
+        </ul>
       </div>
-      {% endfor %} {% endblock %}
+
+      {% for dish in dishes %} {% include 'card.html'%} {% endfor %}
     </div>
+    {% endblock %}
   </body>
 </html>
