@@ -1,14 +1,31 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404
-from .models import Dish
+from .models import Dish, Category
 from .forms import DishForm
 
 # Create your views here.
 
 
-def index(request):
-    dishes = Dish.objects.all()
-    return render(request, "index.html", {"dishes": dishes})
+def index(request, category_id=None):
+    categories = Category.objects.all()
+
+    if category_id:
+        selected_category = get_object_or_404(Category, id=category_id)
+        dishes = Dish.objects.filter(category=selected_category)
+
+    else:
+        dishes = Dish.objects.all()
+        selected_category = None
+
+    return render(
+        request,
+        "index.html",
+        {
+            "dishes": dishes,
+            "categories": categories,
+            "selected_category": selected_category,
+        },
+    )
 
 
 def detail(request, id):

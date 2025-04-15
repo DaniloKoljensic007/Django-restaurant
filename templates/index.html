@@ -14,19 +14,28 @@
       >
         <h4 class="mb-4">Filter by categories</h4>
         <ul class="nav flex-column">
+          {% for category in categories %}
           <li class="nav-item mb-2">
-            <a href="#" class="nav-link text-white">Meat</a>
+            <a
+              href="{% url 'filter_by_category' category.id %}"
+              class="nav-link text-white"
+            >
+              {{ category.name }}
+            </a>
           </li>
-          <li class="nav-item mb-2">
-            <a href="#" class="nav-link text-white">Vegan</a>
-          </li>
-          <li class="nav-item mb-2">
-            <a href="#" class="nav-link text-white">Vegeterian</a>
-          </li>
+          {% endfor %}
         </ul>
       </div>
+      <div class="col-md-9 col-lg-10 p-4">
+        <h2>
+          {% if selected_category %} {{ selected_category.name }} {% else %} All
+          Dishes {% endif %}
+        </h2>
 
-      {% for dish in dishes %} {% include 'card.html'%} {% endfor %}
+        <div class="row">
+          {% for dish in dishes %} {% include 'card.html' %} {% endfor %}
+        </div>
+      </div>
     </div>
     {% endblock %}
   </body>
