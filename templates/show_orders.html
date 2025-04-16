@@ -5,7 +5,7 @@
     <ul>
       {% for item in order.items.all %}
       <li>
-        {{ item.quantity }} x {{ item.dish.name }} – ${{ item.dish.price }}
+        {{ item.quantity }} x {{ item.dish.name }} – ${{ item.get_total_price }}
       </li>
       {% endfor %}
     </ul>
