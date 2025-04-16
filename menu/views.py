@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404
+from django.contrib import messages
 from .models import Dish, Category
 from .forms import DishForm
 
@@ -7,25 +8,30 @@ from .forms import DishForm
 
 
 def index(request, category_id=None):
-    categories = Category.objects.all()
-
-    if category_id:
-        selected_category = get_object_or_404(Category, id=category_id)
-        dishes = Dish.objects.filter(category=selected_category)
+    if not request.user.is_authenticated:
+        messages.warning(request, "You must be login to access this page!")
+        return redirect("login")
 
     else:
-        dishes = Dish.objects.all()
-        selected_category = None
+        categories = Category.objects.all()
 
-    return render(
-        request,
-        "index.html",
-        {
-            "dishes": dishes,
-            "categories": categories,
-            "selected_category": selected_category,
-        },
-    )
+        if category_id:
+            selected_category = get_object_or_404(Category, id=category_id)
+            dishes = Dish.objects.filter(category=selected_category)
+
+        else:
+            dishes = Dish.objects.all()
+            selected_category = None
+
+        return render(
+            request,
+            "index.html",
+            {
+                "dishes": dishes,
+                "categories": categories,
+                "selected_category": selected_category,
+            },
+        )
 
 
 def detail(request, id):
@@ -62,6 +68,14 @@ def edit_dish(request, id):
 
 
 def create_dish(request):
+
+    if not request.user.is_authenticated:
+        messages.warning(request, "You must be logged in to access this page!")
+        return redirect("login")
+
+    if not request.user.is_staff:
+        messages.error(request, "You don't have access to this page!")
+        return redirect("index")
 
     if request.method == "POST":
         form = DishForm(request.POST)
