@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404
 from django.contrib import messages
-from .models import Dish, Category
+from .models import Dish, Category, Order, OrderItem
 from .forms import DishForm
+
 
 # Create your views here.
 
@@ -94,3 +95,27 @@ def delete_dish(request, id):
     dish = get_object_or_404(Dish, id=id)
     dish.delete()
     return redirect("index")
+
+
+def order_dish(request, dish_id):
+
+    if not request.user.is_authenticated:
+        messages.warning(request, "You must be logged in to access this page!")
+        return redirect("login")
+
+    dish = get_object_or_404(Dish, id=dish_id)
+
+    if request.method == "POST":
+        quantity = int(request.POST.get("quantity", 1))
+
+        order = Order.objects.create(user=request.user)
+
+        OrderItem.objects.create(order=order, dish=dish, quantity=quantity)
+
+        return redirect("my_orders")
+    return redirect("index")
+
+
+def my_orders(request):
+    orders = Order.objects.filter(user=request.user).order_by("-created_at")
+    return render(request, "show_orders.html", {"orders": orders})

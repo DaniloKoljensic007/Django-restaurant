@@ -10,12 +10,15 @@
     <div class="row m-3">
       <div class="card" style="width: 18rem">
         <div class="card-body">
-          <h5 class="card-title">{{dish.name}} ${{dish.price}}</h5>
-          <p class="card-text">{{dish.description}}</p>
-          <p class="card-text">{{dish.is_available}}</p>
-          <label for="Quantity" class="mb-2"> Quantity </label>
-          <input type="number" name="Quantity" />
-          <button type="submit" class="btn btn-primary mt-2">Order</button>
+          <form method="post" action="{% url 'order' dish.id %}">
+            {% csrf_token %}
+            <h5 class="card-title">{{dish.name}} ${{dish.price}}</h5>
+            <p class="card-text">{{dish.description}}</p>
+            <p class="card-text">{{dish.is_available}}</p>
+            <label for="quantity" class="mb-2" min="1"> Quantity </label>
+            <input type="number" name="quantity" />
+            <button type="submit" class="btn btn-primary mt-2">Order</button>
+          </form>
         </div>
       </div>
     </div>
